@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+stages:
+  - stage: A
+    jobs:
+    - job: A1
+    steps:
+    - task: DotNetCoreCLI@2
+        inputs:
+        command: 'build'
+        projects: '/MyFirstAzureWebApp/MyFirstAzureWebApp/*.csproj'
+
+        - task: AzureRmWebAppDeployment@4
+        inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Visual Studio Professional Subscription(6563b6bd-d45f-44fe-9136-11e1e3f53885)'
+        appType: 'webApp'
+        WebAppName: 'dlr-website-test'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
